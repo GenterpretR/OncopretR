@@ -22,12 +22,21 @@ notifications:
     on_success: "never"
     on_failure: "never"
 deploy:
-  provider: releases
-  api_key: $GITHUB_OAUTH_TOKEN
-  skip_cleanup: true
-  on:
-    tags: true
-  file: "target/OncopretR-0.0.1-SNAPSHOT.jar"
+  - provider: releases
+      api_key: $GITHUB_OAUTH_TOKEN
+      file: target/backend-service-${TRAVIS_BRANCH}.0.0-SNAPSHOT.jar
+      skip_cleanup: true
+      on:
+        repo: watson-developer-cloud/spring-boot-starter
+        jdk: oraclejdk8
+        tags: true
+#deploy:
+#  provider: releases
+#  api_key: $GITHUB_OAUTH_TOKEN
+#  skip_cleanup: true
+#  on:
+#    tags: true
+#  file: "target/OncopretR-0.0.1-SNAPSHOT.jar"
 #deploy:
 #  - provider: heroku
 #    api_key: $HEROKU_API_KEY
