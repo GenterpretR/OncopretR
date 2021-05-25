@@ -22,15 +22,15 @@ notifications:
     on_success: "never"
     on_failure: "never"
 deploy:
+  on:
+    branch: main
   - provider: releases
     api_key: ${GITHUB_OAUTH_TOKEN}
     file: target/backend-service-${TRAVIS_BRANCH}.0.0-SNAPSHOT.jar
     skip_cleanup: true
     on:
       jdk: openjdk8
-    branches:
-      only:
-        - main
+
 #deploy:
 #  provider: releases
 #  api_key: $GITHUB_OAUTH_TOKEN
