@@ -27,8 +27,7 @@ deploy:
     file: target/backend-service-${TRAVIS_BRANCH}.0.0-SNAPSHOT.jar
     skip_cleanup: true
     on:
-      jdk: oraclejdk8
-      tags: true
+      jdk: openjdk8
 
 #deploy:
 #  provider: releases
