@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,12 +8,10 @@ import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { withSnackbar } from "notistack";
-import React, { useState } from "react";
-import { failureToast, successToast } from "../util/util";
-import { makeStyles } from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
-
+import React from "react";
 import * as Yup from "yup";
+import { failureToast, successToast } from "../util/util";
+
 const SignupSchema = Yup.object().shape({
   firstname: Yup.string()
     .min(2, "Too Short!")
@@ -40,28 +32,27 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     marginTop: theme.spacing(8),
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   },
+//   avatar: {
+//     margin: theme.spacing(1),
+//     backgroundColor: theme.palette.secondary.main,
+//   },
+//   form: {
+//     width: "100%", // Fix IE 11 issue.
+//     marginTop: theme.spacing(3),
+//   },
+//   submit: {
+//     margin: theme.spacing(3, 0, 2),
+//   },
+// }));
 
 const CreateNewUserDialogComponent = (props: any) => {
-  const classes = useStyles();
   const submitNewUser = (values: any) => {
     axios
       .post("/api/auth/signup", { ...values })
@@ -73,7 +64,6 @@ const CreateNewUserDialogComponent = (props: any) => {
         props.enqueueSnackbar(reponse.message, failureToast);
       });
   };
-  const values: any = {};
   return (
     <div>
       <Dialog open={props.open} aria-labelledby="form-dialog-title">

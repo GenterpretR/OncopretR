@@ -1,19 +1,19 @@
+import { Checkbox, IconButton } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Add } from "@material-ui/icons";
+import DeleteIcon from "@material-ui/icons/Delete";
+import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { failureToast, successToast } from "../util/util";
-import Title from "./Title";
-import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
-import DeleteIcon from "@material-ui/icons/Delete";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import { Button, Checkbox, IconButton } from "@material-ui/core";
-import { Add, AddIcCall, PlusOne } from "@material-ui/icons";
 import { CreateNewUserDialog } from "./CreateNewUser";
+import Title from "./Title";
 export function UserListComponent(props: any) {
   const [userList, setUserList] = React.useState<any>([]);
   const [open, setOpen] = React.useState<boolean>(false);
