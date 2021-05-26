@@ -29,13 +29,13 @@ notifications:
 #    on:
 #      jdk: openjdk8
 
-deploy:
-  provider: releases
-  api_key: ${GITHUB_OAUTH_TOKEN}
-  on:
-    tags: true
-    file: backend-service 0.0.1-SNAPSHOT.jar
-  skip_cleanup: true
+#deploy:
+#  provider: releases
+#  api_key: ${GITHUB_OAUTH_TOKEN}
+#  on:
+#    tags: true
+#    file: backend-service 0.0.1-SNAPSHOT.jar
+#  skip_cleanup: true
 deploy:
   provider: azure_web_apps
   username: ${AZURE_USERNAME}       # If AZURE_WA_USERNAME isn't set
