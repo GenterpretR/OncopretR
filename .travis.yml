@@ -36,6 +36,11 @@ deploy:
     tags: true
     file: backend-service 0.0.1-SNAPSHOT.jar
   skip_cleanup: true
+deploy:
+  provider: azure_web_apps
+  username: ${AZURE_USERNAME}       # If AZURE_WA_USERNAME isn't set
+  password: ${AZURE_PASSWORD}   # If AZURE_WA_PASSWORD isn't set
+  site: https://oncopretr.azurewebsites.net       # If AZURE_WA_SITE isn't set
 #deploy:
 #  provider: releases
 #  api_key: $GITHUB_OAUTH_TOKEN

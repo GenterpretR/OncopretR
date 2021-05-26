@@ -20,7 +20,7 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import React from "react";
 export const MainListItems = () => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
-  return user.roles.includes("ROLE_ADMIN") ? (
+  return user?.roles?.includes("ROLE_ADMIN") ? (
     <div>
       <ListItem button component="a" href="/#/dashboard/orders">
         <ListItemIcon>
@@ -86,7 +86,7 @@ export const SecondaryListItems = () => {
 
   return (
     <>
-      {user.roles.includes("ROLE_ADMIN") && (
+      {user?.roles?.includes("ROLE_ADMIN") && (
         <div>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>

@@ -218,7 +218,7 @@ export default function Dashboard() {
     </Menu>
   );
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
-  const admin = user.roles.includes("ROLE_ADMIN");
+  const admin = user?.roles?.includes("ROLE_ADMIN");
   return (
     <div className={classes.root}>
       <CssBaseline />
