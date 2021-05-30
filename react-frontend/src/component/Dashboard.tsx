@@ -1,15 +1,19 @@
-import { Menu, MenuItem } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  AppBar,
+  Container,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -21,7 +25,7 @@ import { secondaryRoutes } from "../routes/routes";
 import { MainListItems, SecondaryListItems } from "./ListItems";
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
   },
@@ -219,6 +223,9 @@ export default function Dashboard() {
   );
   const user = JSON.parse(sessionStorage.getItem("user") || "{roles:[]}");
   const admin = user?.roles?.includes("ROLE_ADMIN");
+  const navigate = (url: string) => {
+    history.push(url);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -241,28 +248,52 @@ export default function Dashboard() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
+          <Typography component="h1" variant="h6" color="inherit" noWrap>
             Oncopretr
           </Typography>
+          <div style={{}}>
+            <Button
+              size="small"
+              style={{
+                color: "white",
+                borderColor: "white",
+                marginLeft: "10px",
+              }}
+              color="primary"
+              variant="outlined"
+              onClick={() => navigate("/dashboard/SingleCellRNA")}
+            >
+              Single Cell RNASeq
+            </Button>{" "}
+            <Button
+              size="small"
+              style={{
+                color: "white",
+                borderColor: "white",
+                marginLeft: "10px",
+              }}
+              color="primary"
+              variant="outlined"
+              onClick={() => navigate("/dashboard/BulkRNATasks")}
+            >
+              Bulk RNASeq
+            </Button>{" "}
+            <Button
+              size="small"
+              style={{
+                color: "white",
+                borderColor: "white",
+                marginLeft: "10px",
+              }}
+              color="primary"
+              variant="outlined"
+              onClick={() => navigate("/dashboard/HitLIkeMolecules")}
+            >
+              Hit LIke Molecules
+            </Button>
+          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          */}
             <IconButton
               edge="end"
               aria-label="account of current user"

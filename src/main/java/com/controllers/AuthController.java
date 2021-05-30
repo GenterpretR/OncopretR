@@ -25,7 +25,6 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -58,6 +57,7 @@ public class AuthController {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(r3);
         user.setRoles(userRoles);
+        user1.setRoles(userRoles);
         User adminUser = new User("Admin", "User", "admin", "admin@gmail.com", encoder.encode("admin"), false, true);
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(r1);

@@ -54,7 +54,7 @@ export function SignInComponent(props: any) {
     sessionActive();
   }, []);
   function navigateToDashboard() {
-    history.push("/dashboard/orders");
+    history.push("/dashboard/home");
   }
   const signInSubmit = (values: any) => {
     axios

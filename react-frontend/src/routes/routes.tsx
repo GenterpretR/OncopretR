@@ -2,9 +2,13 @@ import AllOutIcon from "@material-ui/icons/AllOut";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import React from "react";
 import Album from "../component/Album";
+import { BulkRNATasks } from "../component/BulkRNA/BulkRNAtasks";
+import { BulkRNAWorkflow } from "../component/BulkRNA/BulkRNAworkflow";
+import { BarChartComponent, ScatterPlotComponent } from "../component/charts";
 import Checkout from "../component/checkout/Checkout";
 import Dashboard from "../component/Dashboard";
 import Deposits from "../component/Deposits";
+import { Home } from "../component/HomeComponent";
 import Pricing from "../component/pricing";
 import { SignIn } from "../component/SignIn";
 import { SignUp } from "../component/SignUp";
@@ -55,11 +59,50 @@ export const dashboardRoutes = [
   },
 ];
 export const secondaryRoutes = [
+  // {
+  //   path: "/dashboard/home",
+  //   name: "/dashboard/home",
+  //   icon: <AllOutIcon></AllOutIcon>,
+  //   component: <Charts></Home>,
+  //   layout: "/dashboard/home",
+  // },
   {
-    path: "/dashboard/checkout",
+    path: "/dashboard/home",
+    name: "/dashboard/home",
+    icon: <AllOutIcon></AllOutIcon>,
+    component: (
+      <React.Fragment>
+        <ScatterPlotComponent></ScatterPlotComponent>
+        <BarChartComponent></BarChartComponent>
+      </React.Fragment>
+    ),
+    layout: "/dashboard/home",
+  },
+  {
+    path: "/dashboard/BulkRNATasks",
+    name: "/dashboard/BulkRNATasks",
+    icon: <AllOutIcon></AllOutIcon>,
+    component: <BulkRNATasks></BulkRNATasks>,
+    layout: "/dashboard/BulkRNATasks",
+  },
+  {
+    path: "/dashboard/BulkRNAWorkflow",
+    name: "/dashboard/BulkRNAWorkflow",
+    icon: <AllOutIcon></AllOutIcon>,
+    component: <BulkRNAWorkflow></BulkRNAWorkflow>,
+    layout: "/dashboard/BulkRNAWorkflow",
+  },
+
+  {
+    path: "/dashboard/charts",
     name: "/dashboard/checkout",
     icon: <AllOutIcon></AllOutIcon>,
-    component: <Checkout></Checkout>,
+    component: (
+      <React.Fragment>
+        <ScatterPlotComponent></ScatterPlotComponent>
+        <BarChartComponent></BarChartComponent>
+      </React.Fragment>
+    ),
     layout: "/dashboard/checkout",
   },
   {
