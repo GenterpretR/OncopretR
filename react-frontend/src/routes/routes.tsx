@@ -8,7 +8,6 @@ import { BarChartComponent, ScatterPlotComponent } from "../component/charts";
 import Checkout from "../component/checkout/Checkout";
 import Dashboard from "../component/Dashboard";
 import Deposits from "../component/Deposits";
-import { Home } from "../component/HomeComponent";
 import Pricing from "../component/pricing";
 import { SignIn } from "../component/SignIn";
 import { SignUp } from "../component/SignUp";
