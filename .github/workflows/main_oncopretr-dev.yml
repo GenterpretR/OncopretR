@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - OncopretR
+name: Build and deploy JAR app to Azure Web App - oncopretr-dev
 
 on:
   push:
@@ -22,14 +22,8 @@ jobs:
         java-version: '8'
 
     - name: Build with Maven
-      run: |
-        mkdir -p src/main/resources/static
-        cd react-frontend
-        npm install
-        npm run build --if-present
-        cd ..
-        cp -avr react-frontend/build/. src/main/resources/static
-        mvn clean install
+      run: mvn clean install
+
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
@@ -55,5 +49,5 @@ jobs:
       with:
         app-name: 'oncopretr-dev'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b0b59ea66f6a4438b3aab360cc0272cd }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6fb50a5db6b94fe9b8e5e56c7adfc7a4 }}
         package: '*.jar'
