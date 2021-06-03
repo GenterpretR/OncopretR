@@ -126,13 +126,14 @@ export const ScatterPlotComponent = (props: any) => {
     options1.series[0].data = Object.values(props.data.AVG);
     options1.series[1].data = Object.values(props.data.MIN);
     options1.series[2].data = Object.values(props.data.MAX);
+    return (
+      <div>
+        <HighchartsReact highcharts={Highcharts} options={options1} />
+      </div>
+    );
+  } else {
+    return <div></div>;
   }
-
-  return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options1} />
-    </div>
-  );
 };
 export const BarChartComponent = (props: any) => {
   return (
