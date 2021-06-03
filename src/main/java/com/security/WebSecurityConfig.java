@@ -63,8 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/api/v1/bulkRNA/save-result/**").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
-
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
         ;
 

@@ -16,20 +16,18 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+    <scm>
+        <connection>scm:hg:https://hg.python.org/jython</connection>
+        <developerConnection>scm:hg:ssh://hg@hg.python.org/jython</developerConnection>
+        <url>https://hg.python.org/jython</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.restfb</groupId>-->
-        <!--            <artifactId>restfb</artifactId>-->
-        <!--            <version>1.44.0</version>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -39,14 +37,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
-
-        <!--        <dependency>-->
-        <!--            <groupId>mysql</groupId>-->
-        <!--            <artifactId>mysql-connector-java</artifactId>-->
-        <!--            <scope>runtime</scope>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -60,34 +50,16 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.security</groupId>-->
-        <!--            <artifactId>spring-security-core</artifactId>-->
-        <!--            <version>5.4.6</version>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.security.oauth</groupId>-->
-        <!--            <artifactId>spring-security-oauth2</artifactId>-->
-        <!--            <version>2.5.1.RELEASE</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.social</groupId>-->
-        <!--            <artifactId>spring-social-core</artifactId>-->
-        <!--            <version>1.1.4.RELEASE</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.social</groupId>-->
-        <!--            <artifactId>spring-social-facebook</artifactId>-->
-        <!--            <version>2.0.3.RELEASE</version>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
     </dependencies>
 
     <build>

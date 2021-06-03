@@ -248,10 +248,17 @@ export default function Dashboard() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography component="h1" variant="h6" color="inherit" noWrap>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            onClick={() => navigate("#/dashboard/home")}
+            style={{ cursor: "pointer" }}
+          >
             Oncopretr
           </Typography>
-          <div style={{}}>
+          <div>
             <Button
               size="small"
               style={{

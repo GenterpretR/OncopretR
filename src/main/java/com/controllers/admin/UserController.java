@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/user/activate/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> activateUser(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<String> activateUser(@PathVariable UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             User userObject = user.get();
@@ -43,7 +43,7 @@ public class UserController {
 
     @GetMapping("/user/deactivate/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deActivateUser(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<String> deActivateUser(@PathVariable UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             User userObject = user.get();
@@ -57,7 +57,7 @@ public class UserController {
 
     @DeleteMapping("/user/delete/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<String> deleteUser(@PathVariable UUID userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             User userObject = user.get();

@@ -17,7 +17,7 @@ export function BulkRNATasksComponent(props: any) {
 
   const fetchTaskList = () => {
     axios
-      .get("/api/v1/bulkRNA/tasks/" + user.id)
+      .get("/api/v1/bulkRNA/jobs/" + user.id)
       .then((response: any) => {
         setUserList(response.data);
       })
@@ -61,6 +61,10 @@ export function BulkRNATasksComponent(props: any) {
   const navigateToWorkflow = () => {
     history.push("/dashboard/BulkRNAWorkflow");
   };
+  const navigateToResult = (id: any) => {
+    history.push("/dashboard/BulkRNAWorkflowResult/" + id);
+  };
+
   useEffect(() => {
     fetchTaskList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -90,6 +94,7 @@ export function BulkRNATasksComponent(props: any) {
             <TableCell align="left">S.No</TableCell>
             <TableCell align="center">Name</TableCell>
             <TableCell align="center">Create Date</TableCell>
+            <TableCell align="center">Results Ready ?</TableCell>
             <TableCell align="center">Link to Results</TableCell>
           </TableRow>
         </TableHead>
@@ -102,12 +107,22 @@ export function BulkRNATasksComponent(props: any) {
                 <TableCell align="center">
                   {row.createDate.substring(0, 10)}
                 </TableCell>
-                <TableCell align="center">{row.username}</TableCell>
+                <TableCell align="center">
+                  {row.processed ? "Yes" : "No"}
+                </TableCell>
+                <TableCell align="center">
+                  <Button
+                    disabled={!row.processed}
+                    onClick={() => navigateToResult(row.id)}
+                  >
+                    Results
+                  </Button>
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} style={{ textAlign: "center" }}>
+              <TableCell colSpan={5} style={{ textAlign: "center" }}>
                 {"No Jobs to display"}
               </TableCell>
             </TableRow>

@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.models.Drug;
 import com.models.ERole;
 import com.models.Role;
 import com.models.User;
@@ -7,21 +8,26 @@ import com.payload.request.LoginRequest;
 import com.payload.request.SignupRequest;
 import com.payload.response.JwtResponse;
 import com.payload.response.MessageResponse;
+import com.repository.DrugRepository;
 import com.repository.RoleRepository;
 import com.repository.UserRepository;
 import com.security.jwt.JwtUtils;
 import com.security.services.UserDetailsImpl;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,6 +42,10 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    DrugRepository drugRepository;
+
     @Autowired
     PasswordEncoder encoder;
 
@@ -43,7 +53,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostConstruct
-    public void addRoles() {
+    public void addRoles() throws FileNotFoundException, UnsupportedEncodingException {
         Role r1 = new Role();
         r1.setName(ERole.ROLE_ADMIN);
         Role r2 = new Role();
@@ -63,7 +73,20 @@ public class AuthController {
         adminRoles.add(r1);
         adminUser.setRoles(adminRoles);
         userRepository.saveAll(Arrays.asList(user, user1, adminUser));
-
+        File file = ResourceUtils.getFile("classpath:drugs.csv");
+        BufferedReader resReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        try {
+            CSVParser csvParser = new CSVParser(resReader, CSVFormat.DEFAULT);
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+            for (CSVRecord csvRecord : csvRecords) {
+                String name = csvRecord.get(0);
+                String smiles = csvRecord.get(1);
+                Drug drug = new Drug(name, smiles);
+                drugRepository.save(drug);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/sessionActive")

@@ -2,6 +2,7 @@ import AllOutIcon from "@material-ui/icons/AllOut";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import React from "react";
 import Album from "../component/Album";
+import { BulkRNAWorkflowResult } from "../component/BulkRNA/BulkRNAWorkflowResult";
 import { BulkRNATasks } from "../component/BulkRNA/BulkRNAtasks";
 import { BulkRNAWorkflow } from "../component/BulkRNA/BulkRNAworkflow";
 import { BarChartComponent, ScatterPlotComponent } from "../component/charts";
@@ -71,8 +72,8 @@ export const secondaryRoutes = [
     icon: <AllOutIcon></AllOutIcon>,
     component: (
       <React.Fragment>
-        <ScatterPlotComponent></ScatterPlotComponent>
-        <BarChartComponent></BarChartComponent>
+        {/* <ScatterPlotComponent></ScatterPlotComponent>
+        <BarChartComponent></BarChartComponent> */}
       </React.Fragment>
     ),
     layout: "/dashboard/home",
@@ -91,7 +92,10 @@ export const secondaryRoutes = [
     component: <BulkRNAWorkflow></BulkRNAWorkflow>,
     layout: "/dashboard/BulkRNAWorkflow",
   },
-
+  {
+    path: "/dashboard/BulkRNAWorkflowResult/:id",
+    component: <BulkRNAWorkflowResult></BulkRNAWorkflowResult>,
+  },
   {
     path: "/dashboard/charts",
     name: "/dashboard/checkout",
