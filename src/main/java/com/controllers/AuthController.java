@@ -1,9 +1,6 @@
 package com.controllers;
 
-import com.models.Drug;
-import com.models.ERole;
-import com.models.Role;
-import com.models.User;
+import com.models.*;
 import com.payload.request.LoginRequest;
 import com.payload.request.SignupRequest;
 import com.payload.response.JwtResponse;
@@ -17,14 +14,23 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
@@ -73,8 +79,11 @@ public class AuthController {
         adminRoles.add(r1);
         adminUser.setRoles(adminRoles);
         userRepository.saveAll(Arrays.asList(user, user1, adminUser));
-        File file = ResourceUtils.getFile("classpath:drugs.csv");
-        BufferedReader resReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    }
+
+    @PostMapping(value = "/data", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void upoadData(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
+        BufferedReader resReader = new BufferedReader(new InputStreamReader(uploadedFile.getInputStream()));
         try {
             CSVParser csvParser = new CSVParser(resReader, CSVFormat.DEFAULT);
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
