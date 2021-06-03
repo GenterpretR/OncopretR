@@ -53,7 +53,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'OncopretR'
+        app-name: 'oncopretr-dev'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_b0b59ea66f6a4438b3aab360cc0272cd }}
         package: '*.jar'
