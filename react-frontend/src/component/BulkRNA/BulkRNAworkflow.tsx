@@ -97,7 +97,6 @@ export function BulkRNAWorkflowComponent(props: any) {
   useEffect(() => {
     fetchDrugList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  console.log(parsedJson);
   return (
     <React.Fragment>
       <Grid container justify="center">
@@ -140,15 +139,6 @@ export function BulkRNAWorkflowComponent(props: any) {
         {parsedJson.length > 0 && (
           <Grid item xs={12} style={{ overflow: "auto", marginTop: "15px" }}>
             <Table size="small" aria-label="a dense table">
-              {/* <TableHead>
-                <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                </TableRow>
-              </TableHead>*/}
               <TableBody>
                 {parsedJson.map((row: any) => {
                   const columns = Object.keys(row);
@@ -179,9 +169,6 @@ export function BulkRNAWorkflowComponent(props: any) {
             /> */}
           </Grid>
         )}
-        {/* <div
-          style={{ width: "100vw", maxWidth: "100vw", maxHeight: "60vh" }}
-        ></div> */}
       </Grid>
     </React.Fragment>
   );
