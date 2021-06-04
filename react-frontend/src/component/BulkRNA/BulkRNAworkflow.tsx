@@ -114,7 +114,7 @@ export function BulkRNAWorkflowComponent(props: any) {
             ref={drugRef}
             style={{ minWidth: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="Combo box" variant="outlined" />
+              <TextField {...params} label="Drugs List" variant="outlined" />
             )}
           />
         </Grid>
