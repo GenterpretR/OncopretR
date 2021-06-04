@@ -1,4 +1,12 @@
-import { Button, Grid, TextField } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TextField,
+} from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import axios from "axios";
 // import _ from "lodash";
@@ -89,7 +97,7 @@ export function BulkRNAWorkflowComponent(props: any) {
   useEffect(() => {
     fetchDrugList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  console.log(parsedJson);
   return (
     <React.Fragment>
       <Grid container justify="center">
@@ -130,7 +138,31 @@ export function BulkRNAWorkflowComponent(props: any) {
           </Button>
         </Grid>
         {parsedJson.length > 0 && (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ overflow: "auto", marginTop: "15px" }}>
+            <Table size="small" aria-label="a dense table">
+              {/* <TableHead>
+                <TableRow>
+                  <TableCell>Dessert (100g serving)</TableCell>
+                  <TableCell align="right">Calories</TableCell>
+                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                </TableRow>
+              </TableHead>*/}
+              <TableBody>
+                {parsedJson.map((row: any) => {
+                  const columns = Object.keys(row);
+                  return (
+                    <TableRow key={row.id}>
+                      {columns.map((column: any) => (
+                        <TableCell align="right">{row[column]}</TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+
             {/* <MaterialTable
               isLoading={loading}
               columns={columns}

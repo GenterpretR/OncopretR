@@ -82,7 +82,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "/data", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void upoadData(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
+    public void uploadData(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
         BufferedReader resReader = new BufferedReader(new InputStreamReader(uploadedFile.getInputStream()));
         try {
             CSVParser csvParser = new CSVParser(resReader, CSVFormat.DEFAULT);
