@@ -11,15 +11,13 @@ import com.payload.JobResult;
 import com.repository.BulkRNARepository;
 import com.repository.DrugRepository;
 import com.repository.UserRepository;
-import org.h2.util.json.JSONBytesSource;
-import org.h2.util.json.JSONItemType;
-import org.h2.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -76,9 +74,12 @@ public class BulkRNAController {
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping(value = "/create-new-job", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void uploadBulkRNACSVFile(@RequestParam("file") MultipartFile uploadedFile, @RequestParam("userId") UUID userId,
-                                     @RequestParam("selectedDrugs") String selectedDrugs) throws IOException {
+                                     @RequestParam("selectedDrugs") String selectedDrugs,
+                                     @RequestParam("name") String name) throws IOException {
+        System.out.println("uploadBulkRNACSVFile");
         User user = userRepository.getOne(userId);
         BulkRNA task = new BulkRNA();
+        task.setName(name);
         task.setProcessed(false);
         task.setUser(user);
         task.setFileContent(uploadedFile.getBytes());
@@ -97,13 +98,55 @@ public class BulkRNAController {
         HttpEntity<MultiValueMap<String, Object>> requestEntity
                 = new HttpEntity<>(body, headers);
         String serverUrl = "http://20.198.107.58:8080/create-new-task";
+        System.out.println("uploadBulkRNACSVFile restTemplate");
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate
-                .postForEntity(serverUrl, requestEntity, String.class);
+//        restTemplate
+//                .postForEntity(serverUrl, requestEntity, String.class);
+        System.out.println("uploadBulkRNACSVFile restTemplate end");
+        System.out.println("uploadBulkRNACSVFile restTemplate2 start");
+        String serverUrl2 = "http://20.198.107.58:8080/create-new-task2";
+//        restTemplate
+//                .postForEntity(serverUrl2, requestEntity, String.class);
+        System.out.println("uploadBulkRNACSVFile restTemplate2 end");
+
+    }
+
+    @PostMapping(value = "/save-pca/{taskId}")
+    public void savePCA(@RequestBody String result, @PathVariable Long taskId) throws IOException {
+        System.out.println("savePCA");
+        BulkRNA task = bulkRNARepository.getOne(taskId);
+        if (task != null) {
+            task.setProcessed(true);
+            task.setPca(result);
+            bulkRNARepository.save(task);
+        }
+    }
+
+    @PostMapping(value = "/save-cell-lineage/{taskId}")
+    public void saveCellLineage(@RequestBody String cellLineage, @PathVariable Long taskId) throws IOException {
+        System.out.println("saveCellLineage");
+        BulkRNA task = bulkRNARepository.getOne(taskId);
+        if (task != null) {
+            task.setProcessed(true);
+            task.setCellLineage(cellLineage);
+            bulkRNARepository.save(task);
+        }
+    }
+
+    @PostMapping(value = "/save-path-enrichment/{taskId}")
+    public void savePathEnrichment(@RequestBody String pathEnrichment, @PathVariable Long taskId) throws IOException {
+        System.out.println("pathEnrichment");
+        BulkRNA task = bulkRNARepository.getOne(taskId);
+        if (task != null) {
+            task.setProcessed(true);
+            task.setPathEnrichment(pathEnrichment);
+            bulkRNARepository.save(task);
+        }
     }
 
     @PostMapping(value = "/save-result/{taskId}")
     public void saveResultOfTask(@RequestBody String result, @PathVariable Long taskId) throws IOException {
+        System.out.println("saveResultOfTask");
         BulkRNA task = bulkRNARepository.getOne(taskId);
         if (task != null) {
             task.setProcessed(true);
@@ -111,64 +154,4 @@ public class BulkRNAController {
             bulkRNARepository.save(task);
         }
     }
-
-//    @PostMapping("/user")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public String userAccess() {
-//        return "User Content.";
-//    }
-//
-//    @GetMapping("/user/activate/{userId}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<String> activateUser(@PathVariable Long userId) throws Exception {
-//        Optional<User> user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            User userObject = user.get();
-//            userObject.setEnabled(true);
-//            userRepository.save(userObject);
-//        } else {
-//            throw new Exception("User Not Found");
-//        }
-//        return ResponseEntity.ok("User activated");
-//    }
-//
-//    @GetMapping("/user/deactivate/{userId}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<String> deActivateUser(@PathVariable Long userId) throws Exception {
-//        Optional<User> user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            User userObject = user.get();
-//            userObject.setEnabled(false);
-//            userRepository.save(userObject);
-//        } else {
-//            throw new Exception("User Not Found");
-//        }
-//        return ResponseEntity.ok("User activated");
-//    }
-//
-//    @DeleteMapping("/user/delete/{userId}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<String> deleteUser(@PathVariable Long userId) throws Exception {
-//        Optional<User> user = userRepository.findById(userId);
-//        if (user.isPresent()) {
-//            User userObject = user.get();
-//            userRepository.deleteById(userId);
-//        } else {
-//            throw new Exception("User Not Found");
-//
-//        }
-//        return ResponseEntity.ok("User Deleted");
-//    }
-//
-//    @GetMapping("/mod")
-//    @PreAuthorize("hasRole('MODERATOR')")
-//    public String moderatorAccess() {
-//        return "Moderator Board.";
-//    }
-//
-//    @GetMapping("/admin")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public String adminAccess() {
-//        return "Admin Board.";
-//    }
 }

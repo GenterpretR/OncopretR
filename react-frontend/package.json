@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "formik": "^2.2.6",
     "highcharts": "^9.1.0",
+    "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^3.0.0",
     "lodash": "^4.17.21",
     "material-table": "^1.69.3",

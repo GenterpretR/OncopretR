@@ -8,3 +8,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.highcharts-boxplot-box {
+  opacity: 0.5;
+}
+.top-predicted .highcharts-xaxis-labels,
+.top-predicted .highcharts-tick {
+  display: none;
+}

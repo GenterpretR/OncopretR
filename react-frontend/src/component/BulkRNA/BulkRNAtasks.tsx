@@ -103,7 +103,7 @@ export function BulkRNATasksComponent(props: any) {
             userList?.map((row: any) => (
               <TableRow key={row.id}>
                 <TableCell align="left">{row.id}</TableCell>
-                <TableCell align="center">{row.jobname}</TableCell>
+                <TableCell align="center">{row.name}</TableCell>
                 <TableCell align="center">
                   {row.createDate.substring(0, 10)}
                 </TableCell>

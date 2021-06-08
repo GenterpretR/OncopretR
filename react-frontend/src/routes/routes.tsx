@@ -5,7 +5,7 @@ import Album from "../component/Album";
 import { BulkRNAWorkflowResult } from "../component/BulkRNA/BulkRNAWorkflowResult";
 import { BulkRNATasks } from "../component/BulkRNA/BulkRNAtasks";
 import { BulkRNAWorkflow } from "../component/BulkRNA/BulkRNAworkflow";
-import { BarChartComponent, ScatterPlotComponent } from "../component/charts";
+// import { BarChartComponent, ScatterPlotComponent } from "../component/charts";
 import Checkout from "../component/checkout/Checkout";
 import Dashboard from "../component/Dashboard";
 import Deposits from "../component/Deposits";
@@ -96,18 +96,18 @@ export const secondaryRoutes = [
     path: "/dashboard/BulkRNAWorkflowResult/:id",
     component: <BulkRNAWorkflowResult></BulkRNAWorkflowResult>,
   },
-  {
-    path: "/dashboard/charts",
-    name: "/dashboard/checkout",
-    icon: <AllOutIcon></AllOutIcon>,
-    component: (
-      <React.Fragment>
-        <ScatterPlotComponent></ScatterPlotComponent>
-        <BarChartComponent></BarChartComponent>
-      </React.Fragment>
-    ),
-    layout: "/dashboard/checkout",
-  },
+  // {
+  //   path: "/dashboard/charts",
+  //   name: "/dashboard/checkout",
+  //   icon: <AllOutIcon></AllOutIcon>,
+  //   component: (
+  //     <React.Fragment>
+  //       <ScatterPlotComponent></ScatterPlotComponent>
+  //       <BarChartComponent></BarChartComponent>
+  //     </React.Fragment>
+  //   ),
+  //   layout: "/dashboard/checkout",
+  // },
   {
     path: "/dashboard/pricing",
     name: "/dashboard/pricing",

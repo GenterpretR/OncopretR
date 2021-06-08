@@ -64,10 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/api/auth/data").permitAll()
+                .antMatchers("/api/v1/bulkRNA/save-pca/**").permitAll()
+                .antMatchers("/api/v1/bulkRNA/save-cell-lineage/**").permitAll()
+                .antMatchers("/api/v1/bulkRNA/save-path-enrichment/**").permitAll()
                 .antMatchers("/api/v1/bulkRNA/save-result/**").permitAll()
                 .antMatchers("/api/v1/**").authenticated()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-        ;
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

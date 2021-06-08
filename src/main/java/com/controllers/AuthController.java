@@ -73,12 +73,21 @@ public class AuthController {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(r3);
         user.setRoles(userRoles);
+        user.setId(UUID.randomUUID());
         user1.setRoles(userRoles);
+        user1.setId(UUID.randomUUID());
+
         User adminUser = new User("Admin", "User", "admin", "admin@gmail.com", encoder.encode("admin"), false, true);
         Set<Role> adminRoles = new HashSet<>();
+        adminUser.setId(UUID.randomUUID());
         adminRoles.add(r1);
         adminUser.setRoles(adminRoles);
-        userRepository.saveAll(Arrays.asList(user, user1, adminUser));
+        try {
+            userRepository.saveAll(Arrays.asList(user, user1, adminUser));
+        } catch (Exception e) {
+        }finally {
+
+        }
     }
 
     @PostMapping(value = "/data", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

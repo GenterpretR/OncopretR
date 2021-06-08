@@ -1,15 +1,12 @@
 package com.models;
 
-import com.payload.JobResult;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -17,8 +14,16 @@ public class BulkRNA implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
+    private String name;
     @Lob
     private byte[] fileContent;
+    @Lob
+    private String pca;
+    @Lob
+    private String cellLineage;
+    @Lob
+    private String pathEnrichment;
     @Lob
     private String result;
     @Column

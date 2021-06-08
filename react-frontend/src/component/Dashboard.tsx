@@ -148,7 +148,6 @@ export default function Dashboard() {
   };
 
   const handleMenuClose = (event: any) => {
-    console.log(event);
     if (event.target.innerText === "Logout") {
       history.push("/signIn");
       // history.push("/api/auth/logout");
@@ -351,7 +350,7 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+          <Grid container>
             <Switch>
               {secondaryRoutes.map((route: any) => {
                 return (

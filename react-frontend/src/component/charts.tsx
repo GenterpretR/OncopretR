@@ -1,39 +1,44 @@
-import * as React from "react";
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HighchartsMore from "highcharts/highcharts-more";
+import _ from "lodash";
+import * as React from "react";
+import { JSONToCSVConvertor } from "./BulkRNA/util";
 
-const options1: any = {
+HighchartsMore(Highcharts);
+const pcaOptions: any = {
   chart: {
     type: "scatter",
     zoomType: "xy",
   },
   title: {
-    text: "",
+    text: "PCA Plot",
   },
-  subtitle: {
-    text: "",
+  legend: {
+    enabled: false,
   },
   xAxis: {
     title: {
-      text: "Sample",
+      enabled: true,
+      text: "Principal 1",
     },
     startOnTick: true,
     endOnTick: true,
     showLastLabel: true,
   },
+
   yAxis: {
     title: {
-      text: "",
+      text: "Principal 2",
     },
-  },
-  legend: {
-    layout: "vertical",
-    align: "left",
-    verticalAlign: "top",
-    x: 100,
-    y: 70,
-    floating: true,
-    borderWidth: 1,
   },
   plotOptions: {
     scatter: {
@@ -53,92 +58,204 @@ const options1: any = {
           },
         },
       },
-      tooltip: {
-        headerFormat: "<b>{series.name}</b><br>",
-        pointFormat: "{point.x} cm, {point.y} kg",
-      },
     },
   },
-  series: [
-    {
-      name: "AVERAGE",
-      color: "rgba(223, 83, 83, .5)",
-      data: [],
-    },
-    {
-      name: "MIN",
-      color: "rgba(119, 152, 191, .5)",
-      data: [],
-    },
-    {
-      name: "MAX",
-      color: "rgba(66, 223, 91, .5)",
-      data: [],
-    },
-  ],
+  series: [],
 };
 
-const options2: any = {
-  chart: {
-    type: "bar",
-  },
-  title: {
-    text: "Stacked bar chart",
-  },
-  xAxis: {
-    // categories: ["Apples", "Oranges", "Pears", "Grapes", "Bananas"],
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: "Total fruit consumption",
-    },
-  },
-  legend: {
-    // reversed: true,
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal",
-    },
-  },
-  series: [
-    {
-      data: [7, 0, 0, 0, 0],
-    },
-    {
-      data: [0, 2, 0, 0, 0],
-    },
-    {
-      data: [0, 0, 9, 0, 0],
-    },
-    {
-      data: [0, 0, 0, 4, 0],
-    },
-    {
-      data: [0, 0, 0, 0, 10],
-    },
-  ],
-};
-export const ScatterPlotComponent = (props: any) => {
-  debugger;
-  if (props.data) {
-    options1.series[0].data = Object.values(props.data.AVG);
-    options1.series[1].data = Object.values(props.data.MIN);
-    options1.series[2].data = Object.values(props.data.MAX);
+export const PCAPlotComponent = (props: any) => {
+  const download = (type: any) => {
+    const data = props.chartData;
+    JSONToCSVConvertor(
+      Object.keys(data).map((d) => {
+        return data[d];
+      }),
+      "PCA",
+      true
+    );
+  };
+  if (props.chartData) {
+    const result: any = [];
+    Object.values(props.chartData?.Samples).forEach((SM: any, index: any) => {
+      result.push([
+        props.chartData["principal component 1"][index],
+        props.chartData["principal component 2"][index],
+      ]);
+    });
+    pcaOptions.series = [
+      {
+        data: result,
+      },
+    ];
+    pcaOptions.tooltip = {
+      formatter: function () {
+        const { x, y, point } = this;
+        const tool =
+          "<b>Sample" +
+          point.index +
+          "</b><br/>" +
+          "<b>X: </b>" +
+          x +
+          " <br/><b>Y: </b>" +
+          y;
+        return tool;
+      },
+    };
     return (
-      <div>
-        <HighchartsReact highcharts={Highcharts} options={options1} />
-      </div>
+      <Grid container style={{ marginBottom: "20px" }}>
+        <Grid item xs={12} style={{ textAlign: "right" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className="ml-2"
+            onClick={() => {
+              download("CELL");
+            }}
+          >
+            Download PCA Data
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={pcaOptions}
+            updateArgs={[true, true, true]}
+          />
+        </Grid>
+      </Grid>
     );
   } else {
     return <div></div>;
   }
 };
-export const BarChartComponent = (props: any) => {
-  return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options2} {...props} />
-    </div>
-  );
+
+const topPredictedDrugsBar: any = {
+  chart: {
+    type: "column",
+  },
+  title: {
+    text: "Top Predicted Results",
+  },
+  xAxis: { tickInterval: 100 },
+  credits: {
+    enabled: false,
+  },
+  tooltip: {},
+  series: [],
+};
+
+export const TopPredictedDrugsBarPlotComponent = (props: any) => {
+  const [selectedSample, setSelectedSample] = React.useState("");
+  const topPredictedDrugsBarOptions: any = { ...topPredictedDrugsBar };
+  const download = (type: any) => {
+    const data = props.chartData;
+    JSONToCSVConvertor(
+      Object.keys(data).map((d) => {
+        return data[d];
+      }),
+      "PCA",
+      true
+    );
+  };
+  if (props.chartData) {
+    const chartData = _.cloneDeep(props.chartData);
+    const categories: any = [];
+    const series: any = [];
+
+    Object.values(chartData.Sample).forEach((SM: any, index: any) => {
+      if (chartData.Sample[index] === selectedSample) {
+        series.push({
+          name: chartData.Drug[index],
+          data: [
+            {
+              y: chartData?.AVG[index],
+              extraData: {
+                CI: chartData.CI[index],
+                MIN: chartData.MIN[index],
+                AVG: chartData.AVG[index],
+                MAX: chartData.MAX[index],
+              },
+            },
+          ],
+        });
+        categories.push(chartData.Drug[index]);
+      }
+    });
+    topPredictedDrugsBarOptions.series = series;
+    topPredictedDrugsBarOptions.xAxis.categories = categories;
+    topPredictedDrugsBarOptions.tooltip = {
+      formatter: function () {
+        const { point } = this;
+        const tool =
+          "<b>MIN : </b>" +
+          point.extraData.CI +
+          "<br/>" +
+          "<b>AVG : </b>" +
+          point.extraData.AVG +
+          "<br/>" +
+          "<b>MAX : </b>" +
+          point.extraData.MAX +
+          "<br/>" +
+          "<b>CI : </b>" +
+          point.extraData.CI +
+          "<br/>";
+        return tool;
+      },
+    };
+    const samples = _.uniq(Object.values(props.chartData.Sample));
+    return (
+      <Grid
+        container
+        className="top-predicted"
+        style={{ marginTop: "20px" }}
+        alignItems="center"
+      >
+        <Grid item xs={6} style={{ marginBottom: "15px" }}>
+          <FormControl fullWidth size="small">
+            <InputLabel id="demo-simple-select-label">
+              Please select a Sample to display Top Predicted Results
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              fullWidth
+              label="Please select a Sample to display Top Predicted Results"
+              value={selectedSample}
+              onChange={(event: any, data: any) => {
+                setSelectedSample(data?.props?.children);
+              }}
+            >
+              {samples.map((k: any, index: any) => {
+                return <MenuItem value={k}>{k}</MenuItem>;
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={6} style={{ marginBottom: "15px", textAlign: "right" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className="ml-2"
+            onClick={() => {
+              download("Top Predicted Results");
+            }}
+          >
+            Download Top Predicted Results
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={topPredictedDrugsBarOptions}
+            updateArgs={[true, true, true]}
+          />
+        </Grid>
+      </Grid>
+    );
+  } else {
+    return <div></div>;
+  }
 };
