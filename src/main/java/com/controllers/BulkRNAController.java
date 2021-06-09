@@ -154,4 +154,10 @@ public class BulkRNAController {
             bulkRNARepository.save(task);
         }
     }
+
+    @DeleteMapping(value = "/delete-task/{taskId}")
+    public void deleteResultOfTask(@PathVariable Long taskId) throws IOException {
+        System.out.println("deleteResultOfTask");
+        bulkRNARepository.deleteById(taskId);
+    }
 }

@@ -1,9 +1,10 @@
-import { Button, Grid } from "@material-ui/core";
+import { Badge, Button, Grid, IconButton } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Delete } from "@material-ui/icons";
 import axios from "axios";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
@@ -25,39 +26,16 @@ export function BulkRNATasksComponent(props: any) {
         props.enqueueSnackbar(reponse.error, failureToast);
       });
   };
-  //   const activateAccount = (user: any) => {
-  //     axios
-  //       .get("/api/v1/admin/user/activate/" + user.id)
-  //       .then((response: any) => {
-  //         props.enqueueSnackbar("User activated", successToast);
-  //         fetchUserList();
-  //       })
-  //       .catch((reponse: any) => {
-  //         props.enqueueSnackbar("reponse.error", successToast);
-  //       });
-  //   };
-  //   const deActivateAccount = (user: any) => {
-  //     axios
-  //       .get("/api/v1/admin/user/deactivate/" + user.id)
-  //       .then((response: any) => {
-  //         props.enqueueSnackbar("User Deactivated", successToast);
-  //         fetchUserList();
-  //       })
-  //       .catch((reponse: any) => {
-  //         props.enqueueSnackbar(reponse.error, failureToast);
-  //       });
-  //   };
-  //   const deleteAccount = (user: any) => {
-  //     axios
-  //       .get("/api/v1/admin/user/deleteUser/" + user.id)
-  //       .then((response: any) => {
-  //         props.enqueueSnackbar("User Deleted", successToast);
-  //         fetchUserList();
-  //       })
-  //       .catch((reponse: any) => {
-  //         props.enqueueSnackbar(reponse.error, failureToast);
-  //       });
-  //   };
+  const deleteTask = (taskId: any) => {
+    axios
+      .delete("/api/v1/bulkRNA/delete-task/" + taskId)
+      .then((response: any) => {
+        fetchTaskList();
+      })
+      .catch((reponse: any) => {
+        props.enqueueSnackbar(reponse.error, failureToast);
+      });
+  };
   const navigateToWorkflow = () => {
     history.push("/dashboard/BulkRNAWorkflow");
   };
@@ -96,6 +74,7 @@ export function BulkRNATasksComponent(props: any) {
             <TableCell align="center">Create Date</TableCell>
             <TableCell align="center">Results Ready ?</TableCell>
             <TableCell align="center">Link to Results</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -117,6 +96,16 @@ export function BulkRNATasksComponent(props: any) {
                   >
                     Results
                   </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    color="inherit"
+                    onClick={() => {
+                      deleteTask(row.id);
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))
