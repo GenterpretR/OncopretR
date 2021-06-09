@@ -15,6 +15,7 @@ import axios from "axios";
 import _ from "lodash";
 import { withSnackbar } from "notistack";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { failureToast, successToast } from "../../util/util";
 
 export function BulkRNAWorkflowComponent(props: any) {
@@ -23,7 +24,7 @@ export function BulkRNAWorkflowComponent(props: any) {
   const fileRef: any = React.createRef();
   const workflowNameRef: any = React.createRef();
   const [selectedDrugs, setSelectedDrugs] = React.useState<any>([]);
-
+  const history = useHistory();
   const [parsedJson, setParsedJson] = React.useState<any>([]);
   const [columns, setColumns] = React.useState<any>([]);
   const loadCSV = () => {
@@ -73,7 +74,6 @@ export function BulkRNAWorkflowComponent(props: any) {
     formData.append("file", fileRef.current.files[0]);
     formData.append("userId", user.id);
     formData.append("name", name);
-
     formData.append("selectedDrugs", drugs?.join());
 
     axios
@@ -83,7 +83,7 @@ export function BulkRNAWorkflowComponent(props: any) {
           "Csv uploaded successfully for job",
           successToast
         );
-        // history.push("/dashboard/BulkRNATasks");
+        history.push("/dashboard/BulkRNATasks");
         // setTaskList(response.data);
       })
       .catch((reponse: any) => {
