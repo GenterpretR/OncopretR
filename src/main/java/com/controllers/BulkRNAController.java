@@ -116,9 +116,15 @@ public class BulkRNAController {
         System.out.println("savePCA");
         BulkRNA task = bulkRNARepository.getOne(taskId);
         if (task != null) {
-            task.setProcessed(true);
             task.setPca(result);
+            taskCompleted(task);
             bulkRNARepository.save(task);
+        }
+    }
+
+    public void taskCompleted(BulkRNA task) {
+        if (task.getPca() != null && task.getResult() != null && task.getPathEnrichment() != null && task.getCellLineage() != null) {
+            task.setProcessed(true);
         }
     }
 
@@ -127,8 +133,8 @@ public class BulkRNAController {
         System.out.println("saveCellLineage");
         BulkRNA task = bulkRNARepository.getOne(taskId);
         if (task != null) {
-            task.setProcessed(true);
             task.setCellLineage(cellLineage);
+            taskCompleted(task);
             bulkRNARepository.save(task);
         }
     }
@@ -138,8 +144,8 @@ public class BulkRNAController {
         System.out.println("pathEnrichment");
         BulkRNA task = bulkRNARepository.getOne(taskId);
         if (task != null) {
-            task.setProcessed(true);
             task.setPathEnrichment(pathEnrichment);
+            taskCompleted(task);
             bulkRNARepository.save(task);
         }
     }
@@ -149,8 +155,8 @@ public class BulkRNAController {
         System.out.println("saveResultOfTask");
         BulkRNA task = bulkRNARepository.getOne(taskId);
         if (task != null) {
-            task.setProcessed(true);
             task.setResult(result);
+            taskCompleted(task);
             bulkRNARepository.save(task);
         }
     }
